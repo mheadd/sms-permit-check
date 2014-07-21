@@ -1,0 +1,14 @@
+{
+  "name": "sms-permit-check",
+  "version": "0.0.1",
+  "description": "Accela app to lookup up permit details by SMS",
+  "main": "index.js",
+  "dependencies": {
+    "twilio": "latest",
+    "request": "latest",
+    "express": "latest",
+    "body-parser": "latest"
+  },
+  "author": "Mark Headd <mheadd@accela.com> (http://civic.io/)",
+  "license": "ISC"
+}
