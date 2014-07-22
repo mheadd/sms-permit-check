@@ -47,7 +47,7 @@ app.post('/', function(req, res){
 	    }
 
 	    // Send SMS response to user.
-		twilio.sendMessage({ to: to, from: config.config.fromNumber, body: message }, function(err, responseData) { //this function is executed when a response is received from Twilio
+		twilio.sendMessage({ to: to, from: config.config.fromNumber, body: message }, function(err, responseData) { 
 		    if (!err) {
 		        console.log(responseData.body);
 		    }
