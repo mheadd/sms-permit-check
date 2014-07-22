@@ -7,7 +7,7 @@ var request = require('request');
 var config = require('./config');
 var twilio = require('twilio')(config.config.accountSID, config.config.authToken);
 
-// SQL for querying CivicData.com
+// SQL for querying CivicData.com.
 var ckan_sql_template = 'SELECT * from "#resourceid#" WHERE "ADDRESS" LIKE \'#address#%\' ORDER BY "DATE OPENED" DESC';
 var ckan_api = 'http://www.civicdata.com/api/action/datastore_search_sql?sql=';
 
@@ -33,7 +33,7 @@ app.post('/', function(req, res){
 	  if (!error && response.statusCode == 200) {
 	    var ckan_json = JSON.parse(body);
 
-	    // Format response
+	    // Format response.
 	    if(ckan_json.result.records.length > 0) {
 	    	var permit_details = ckan_json.result.records[0];
 	    	var description = permit_details["DESCRIPTION"] || 'No description provided';
@@ -46,7 +46,7 @@ app.post('/', function(req, res){
 	    	message = 'Sorry. No permits found at that address.';
 	    }
 
-	    //Send SMS response.
+	    // Send SMS response to user.
 		twilio.sendMessage({ to: to, from: config.config.fromNumber, body: message }, function(err, responseData) { //this function is executed when a response is received from Twilio
 		    if (!err) {
 		        console.log(responseData.body);
