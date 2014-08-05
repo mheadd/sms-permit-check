@@ -8,7 +8,7 @@ The data source for permit information is [CivicData.com](http://www.civicdata.c
 
 * Clone this repo.
 * Run <code>npm install</code> to install dependencies.
-* Set up a Twilio account.
+* Set up a [Twilio](https://www.twilio.com/) account.
 * Copy <code>config.sample.js</code> to <code>config.js</code> and enter your Twilio credentials.
 
 ## Sample
