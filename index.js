@@ -8,7 +8,7 @@ var config = require('./config');
 var twilio = require('twilio')(config.config.accountSID, config.config.authToken);
 
 // SQL for querying CivicData.com.
-var ckan_sql_template = 'SELECT * from "#resourceid#" WHERE "ADDRESS" LIKE \'#address#%\' ORDER BY "DATE OPENED" DESC';
+var ckan_sql_template = 'SELECT * from "#resourceid#" WHERE "Street Address" LIKE \'#address#%\' ORDER BY "Date" DESC';
 var ckan_api = 'http://www.civicdata.com/api/action/datastore_search_sql?sql=';
 
 // Set up Express app.
@@ -29,22 +29,21 @@ app.post('/', function(req, res){
 	var sql = encodeURIComponent(ckan_sql_template.replace('#address#', address).replace('#resourceid#', config.config.resourceID));
 
 	// Make call to CivicData.com API.
-	request(ckan_api+sql, function (error, response, body) {
+	request(ckan_api + sql, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
 	    var ckan_json = JSON.parse(body);
 
 	    // Format response.
 	    if(ckan_json.result.records.length > 0) {
 	    	var permit_details = ckan_json.result.records[0];
-	    	var description = permit_details["DESCRIPTION"] || 'No description provided';
-		    var message = 'NAME: ' + permit_details["RECORD NAME"] + '. ';
-		    message += 'DESCRIPTION: ' + description.toProperCase() + '. ';
-		    message += 'STATUS: ' + permit_details["RECORD STATUS"]  + '. ';
-		    message += 'ID: ' + permit_details["RECORD ID"] + '. ';
+	    	var description = permit_details["Permit Name"] || 'No description provided';
+		    var message = 'DESCRIPTION: ' + description.toProperCase() + '.\n ';
+		    message += 'TYPE: ' + permit_details["Type"]  + '.\n ';
+		    message += 'RECORD #: ' + permit_details["Record #"] + '.\n ';
+		    message += 'STATUS: ' + 'In Progress.'
 	    }
 	    else {
 	    	message = 'Sorry. No permits found at that address.';
-	    }
 
 	    // Send SMS response to user.
 		twilio.sendMessage({ to: to, from: config.config.fromNumber, body: message }, function(err, responseData) { 
