@@ -13,4 +13,4 @@ The data source for permit information is [CivicData.com](http://www.civicdata.c
 
 ## Sample
 
-![Example](https://raw.githubusercontent.com/mheadd/sms-permit-check/master/sample.jpeg "Permit from Atlanta")
+![Example](https://raw.githubusercontent.com/mheadd/sms-permit-check/atlanta/sample.jpeg "Permit from Atlanta")
