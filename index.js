@@ -3,6 +3,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');
 
+// Port to run server on.
+var port = process.argv[2] || 3000;
+
 // Get Twilio settings from config.
 var config = require('./config');
 var twilio = require('twilio')(config.config.accountSID, config.config.authToken);
@@ -58,4 +61,4 @@ app.post('/', function(req, res){
 	res.status(200).end();
 });
 
-app.listen(3000);
+app.listen(port);
