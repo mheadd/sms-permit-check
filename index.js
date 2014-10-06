@@ -36,6 +36,7 @@ app.post('/', function(req, res){
 	  if (!error && response.statusCode == 200) {
 	    var ckan_json = JSON.parse(body);
 
+
 	    // Format response.
 	    if(ckan_json.result.records.length > 0) {
 	    	var permit_details = ckan_json.result.records[0];
@@ -47,6 +48,7 @@ app.post('/', function(req, res){
 	    }
 	    else {
 	    	message = 'Sorry. No permits found at that address.';
+	    }
 
 	    // Send SMS response to user.
 		twilio.sendMessage({ to: to, from: config.config.fromNumber, body: message }, function(err, responseData) { 
@@ -54,7 +56,7 @@ app.post('/', function(req, res){
 		        console.log(responseData.body);
 		    }
 		});
-	  }
+	  
 	}
 	});
 
