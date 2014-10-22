@@ -4,6 +4,7 @@
   "description": "Accela app to lookup up permit details by SMS",
   "main": "index.js",
   "dependencies": {
+    "accela-construct": "latest",
     "twilio": "latest",
     "request": "latest",
     "express": "latest",
