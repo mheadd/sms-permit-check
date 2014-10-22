@@ -8,8 +8,7 @@ var address = require('./address');
 var config = require('./config');
 var twilio = require('twilio')(config.config.accountSID, config.config.authToken);
 
-// Config settings.
-var config = require('./config');
+// Config settings for Accela API.
 accela.setup(config.config.accela);
 
 // Port to run server on.
@@ -22,6 +21,7 @@ var limit = 3;
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// Route that Twilio will use to send payload with message info.
 app.post('/', function(req, res){
 
 	// Get details from inbound text.
@@ -63,8 +63,8 @@ app.post('/', function(req, res){
 		else {
 			twilio.sendMessage({ to: to, from: config.config.fromNumber, body: 'Could not use that address. Try again..?' });
 		}
+		// Let Twilio platform know we got the payload.
 		res.status(200).end();
 	});
 });
-
 app.listen(port);
