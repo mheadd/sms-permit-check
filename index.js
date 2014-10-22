@@ -27,8 +27,14 @@ app.post('/', function(req, res){
 	// Get details from inbound text.
 	var to = req.body.From;
 	var address = req.body.Body;
+
+	// Create a new address object.
 	var adr = new Address();
+
+	// Parse the address sent from user.
 	adr.parse(address, function(result, error) {
+		
+		// Use the address information to look up records in Accela API.
 		if(!error) {
 			accela.search.records({ expand: 'addresses' }, result, function (records, error) {
 			    if(!error) {
@@ -46,19 +52,19 @@ app.post('/', function(req, res){
 						twilio.sendMessage({ to: to, from: config.config.fromNumber, body: 'No records found at that address.' });
 					}
 				}
-				// Send error message to user.
+				// Houston, we have a problem.
 				else {
-					twilio.sendMessage({ to: to, from: config.config.fromNumber, body: 'An error occured.' });
+					twilio.sendMessage({ to: to, from: config.config.fromNumber, body: 'Could not look up records for that address.' });
 				}
-
 			});
 		}
+
+		// Couldn't parse address sent by user.
 		else {
-			twilio.sendMessage({ to: to, from: config.config.fromNumber, body: 'An error occured.' });
+			twilio.sendMessage({ to: to, from: config.config.fromNumber, body: 'Could not use that address. Try again..?' });
 		}
 		res.status(200).end();
 	});
-
 });
 
 app.listen(port);
