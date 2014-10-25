@@ -1,4 +1,4 @@
-# SMS Permit Check (Atlanta version)
+# SMS Permit Check (Reno version)
 
 A Node.js application that allows a user to check for a permit at a specific address using text messaging.
 
