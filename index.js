@@ -16,6 +16,7 @@ var port = process.argv[2] || 3000;
 
 // Limit SMS responses.
 var limit = 3;
+var counter = 0;
 
 // Set up Express app.
 var app = express();
@@ -39,22 +40,25 @@ app.post('/', function(req, res){
 			accela.search.records({ expand: 'addresses' }, result, function (records, error) {
 			    if(!error) {
 			    	// Send results to user.
-			    	// TODO: Format response based on Atlanta record structure.
 					if(records.result) {
-						for(var i=0; i<limit; i++) {
-							var message = 'ID: ' + records.result[i].id + '.\n';
-							message += 'Type: ' + records.result[i].type.subType + '.\n';
+						for(var item in records.result) {
+							if (counter == limit) {
+								break;
+							}
+							var message = 'ID: ' + records.result[item].customId + '.\n';
+							message += 'Status: ' + records.result[item].status.value + '.\n';
 							twilio.sendMessage({ to: to, from: config.config.fromNumber, body: message });
+							counter++;
 						}
 					}
 					// No records found at this address.
 					else {
-						twilio.sendMessage({ to: to, from: config.config.fromNumber, body: 'No records found at that address.' });
+						twilio.sendMessage({ to: to, from: config.config.fromNumber, body: 'No permits found at that address.' });
 					}
 				}
 				// Houston, we have a problem.
 				else {
-					twilio.sendMessage({ to: to, from: config.config.fromNumber, body: 'Could not look up records for that address.' });
+					twilio.sendMessage({ to: to, from: config.config.fromNumber, body: 'Could not look up permits for that address.' });
 				}
 			});
 		}

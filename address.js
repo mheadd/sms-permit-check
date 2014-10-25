@@ -15,33 +15,32 @@ Address.prototype.parse = function(adr, callback) {
 			var results = addressParts.result;
 
 			// Address object to pass into call to Accela Construct API.
-			addressObject = { address: {} };
+			searchObject = { address: {}, module: 'Building', status: { text: 'Active/Permit Issued', value: 'Active/Permit Issued' } };
 
 			for(var item in results) {
 				if(results[item].tag == 'AddressNumber') {
-					addressObject.address.streetStart = results[item].value;
+					searchObject.address.houseNumberStart = parseInt(results[item].value);
 				}
 				else if(results[item].tag == 'StreetName') {
-					addressObject.address.streetName = results[item].value;
+					searchObject.address.streetName = results[item].value + '%';
 				}
 				else if(results[item].tag == 'StreetNamePostType') {
-					addressObject.address.streetSuffix = { text: results[item].value, value: results[item].value };
+					searchObject.address.streetSuffix = { text: results[item].value, value: results[item].value };
 				}
 				else if(results[item].tag == 'StreetNamePostDirectional') {
-					addressObject.address.streetSuffixDirection = { text: results[item].value, value: results[item].value };
+					searchObject.address.streetSuffixDirection = { text: results[item].value, value: results[item].value };
 				}
 				else if(results[item].tag == 'PlaceName') {
-					addressObject.address.city = results[item].value;
+					searchObject.address.city = results[item].value;
 				}
 				else if(results[item].tag == 'StateName') {
-					addressObject.address.state = { text: results[item].value, value: results[item].value };
+					searchObject.address.state = { text: results[item].value, value: results[item].value };
 				}
 				else if(results[item].tag == 'ZipCode') {
-					addressObject.address.postalCode = results[item].value;
+					searchObject.address.postalCode = results[item].value;
 				}
 			}
-
-			callback(addressObject, null);
+			callback(searchObject, null);
 
 		}
 		else {
