@@ -21,6 +21,37 @@ A sample response when searching for a record using the Accela Construct API.
 {
     "result": [
         {
+            "addresses": [
+                {
+                    "streetStart": 660,
+                    "refAddressId": 924562401,
+                    "id": 1000718993,
+                    "isPrimary": "Y",
+                    "streetName": "PEACHTREE",
+                    "postalCode": "00000",
+                    "county": "FULTON",
+                    "serviceProviderCode": "ATLANTA_GA",
+                    "city": "ATLANTA",
+                    "recordId": {
+                        "id": "ATLANTA_GA-14BLR-00000-18389",
+                        "trackingId": 0,
+                        "serviceProviderCode": "ATLANTA_GA",
+                        "value": "14BLR-00000-18389"
+                    },
+                    "state": {
+                        "value": "GA",
+                        "text": "GA"
+                    },
+                    "streetSuffix": {
+                        "value": "ST",
+                        "text": "ST"
+                    },
+                    "streetSuffixDirection": {
+                        "value": "NE",
+                        "text": "NE"
+                    }
+                }
+            ],
             "name": "Curing Kids",
             "id": "ATLANTA_GA-14BLR-00000-18389",
             "type": {
