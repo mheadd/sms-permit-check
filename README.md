@@ -13,6 +13,10 @@ The data source for permit information is [Accela Automation](https://developer.
 * Set up a [Twilio](https://www.twilio.com/) account.
 * Copy <code>config.sample.js</code> to <code>config.js</code> and enter your Twilio credentials & Accela app credentials.
 
+## Demo Number
+
+(678) 909-1550 - Note, this number is for demo purposes only and may from time to time be unavailable.
+
 ## Sample Record
 
 A sample response when searching for a record using the Accela Construct API.
