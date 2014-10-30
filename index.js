@@ -17,6 +17,11 @@ var port = process.argv[2] || 3000;
 // Limit SMS responses.
 var limit = 3;
 
+// Utility function to remove agency name prefix from record ID.
+function formatID(id) {
+	return id.replace(config.config.accela.config.agency + '-', '')
+}
+
 // Set up Express app.
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,8 +47,9 @@ app.post('/', function(req, res){
 			    	// TODO: Format response based on Atlanta record structure.
 					if(records.result) {
 						for(var i=0; i<limit; i++) {
-							var message = 'ID: ' + records.result[i].id + '.\n';
-							message += 'Type: ' + records.result[i].type.subType + '.\n';
+							var message = 'ID: ' + formatID(records.result[i].id) + '.\n';
+							message += 'Type: ' + records.result[i].type.text + '.\n';
+							message += 'Status: ' + records.result[i].status.text + '.\n';
 							twilio.sendMessage({ to: to, from: config.config.fromNumber, body: message });
 						}
 					}

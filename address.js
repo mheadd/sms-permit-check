@@ -14,34 +14,34 @@ Address.prototype.parse = function(adr, callback) {
 			var addressParts = JSON.parse(body);
 			var results = addressParts.result;
 
-			// Address object to pass into call to Accela Construct API.
-			addressObject = { address: {} };
+			// Record object to pass into call to Accela Construct API.
+			recordObject = { address: {}, module:"Building", types: [ { type:"Commercial" }, { type:"Residential" } ] };
 
 			for(var item in results) {
 				if(results[item].tag == 'AddressNumber') {
-					addressObject.address.streetStart = results[item].value;
+					recordObject.address.streetStart = results[item].value;
 				}
 				else if(results[item].tag == 'StreetName') {
-					addressObject.address.streetName = results[item].value;
+					recordObject.address.streetName = results[item].value;
 				}
 				else if(results[item].tag == 'StreetNamePostType') {
-					addressObject.address.streetSuffix = { text: results[item].value, value: results[item].value };
+					recordObject.address.streetSuffix = { text: results[item].value, value: results[item].value };
 				}
 				else if(results[item].tag == 'StreetNamePostDirectional') {
-					addressObject.address.streetSuffixDirection = { text: results[item].value, value: results[item].value };
+					recordObject.address.streetSuffixDirection = { text: results[item].value, value: results[item].value };
 				}
 				else if(results[item].tag == 'PlaceName') {
-					addressObject.address.city = results[item].value;
+					recordObject.address.city = results[item].value;
 				}
 				else if(results[item].tag == 'StateName') {
-					addressObject.address.state = { text: results[item].value, value: results[item].value };
+					recordObject.address.state = { text: results[item].value, value: results[item].value };
 				}
 				else if(results[item].tag == 'ZipCode') {
-					addressObject.address.postalCode = results[item].value;
+					recordObject.address.postalCode = results[item].value;
 				}
 			}
 
-			callback(addressObject, null);
+			callback(recordObject, null);
 
 		}
 		else {
